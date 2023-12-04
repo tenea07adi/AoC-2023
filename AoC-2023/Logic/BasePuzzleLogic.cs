@@ -30,7 +30,7 @@ namespace AoC_2023.Logic
 
         private void LogResult(string result)
         {
-            Console.WriteLine($"Day_ {CalendarDay}: \n {PuzzleUrlBase}{CalendarDay} \n {result} \n");
+            Console.WriteLine($"Day_{CalendarDay}: \n {PuzzleUrlBase}{CalendarDay} \n {result} \n");
         }
 
         protected abstract string LogicPart1(string data);

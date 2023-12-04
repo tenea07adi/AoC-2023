@@ -8,7 +8,7 @@ namespace AoC_2023.Helpers
 {
     public static class DataProviderHelper
     {
-        public static string defaultBasePath = @"../Data/";
+        public static string defaultBasePath = @"../net6.0/Data/";
 
         public static List<string> GetTextLines(string fileName)
         {

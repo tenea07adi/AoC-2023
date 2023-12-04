@@ -12,10 +12,6 @@ namespace AoC_2023
             Console.WriteLine("AoC-2023 URL: " + @"https://adventofcode.com/2023/");
             Console.WriteLine("---------------------------------------------------------------------");
 
-            string dataFilesPath = "D:\\Programming\\Contests\\AdventCalendar_2023\\AoC-2023\\AoC-2023\\Data";
-
-            DataProviderHelper.defaultBasePath = dataFilesPath;
-
             List<BasePuzzleLogic> puzzles = new List<BasePuzzleLogic>();
 
             LoadPuzzles(puzzles);
@@ -27,6 +23,7 @@ namespace AoC_2023
             puzzles.Add(new Day1());
             puzzles.Add(new Day2());
             puzzles.Add(new Day3());
+            puzzles.Add(new Day4());
         }
 
         static void RunPuzzles(List<BasePuzzleLogic> puzzles)
