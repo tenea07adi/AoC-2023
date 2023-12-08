@@ -186,7 +186,7 @@ namespace AoC_2023.Logic
                     }
                 }
 
-                resultMatrix = ResizeMatrix(resultMatrix, 3, mappLineCount - 2);
+                resultMatrix = MatrixHelper.ResizeMatrix(resultMatrix, 3, mappLineCount - 2);
 
                 string[] sourceDestination = new string[2];
 
@@ -199,21 +199,6 @@ namespace AoC_2023.Logic
             }
 
             return result;
-        }
-
-        private T[,] ResizeMatrix<T>(T[,] original, int newColumnLenght, int newRowLenght)
-        {
-            T[,] newMatrix = new T[newRowLenght, newColumnLenght];
-
-            for (int i = 0; i < newRowLenght; i++)
-            {
-                for (int j = 0; j < newColumnLenght; j++)
-                {
-                    newMatrix[i, j] = original[i, j];
-                }
-            }
-
-            return newMatrix;
         }
     }
 }
