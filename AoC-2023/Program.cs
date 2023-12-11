@@ -20,16 +20,17 @@ namespace AoC_2023
 
         static void LoadPuzzles(List<BasePuzzleLogic> puzzles)
         {
-            puzzles.Add(new Day1());
-            puzzles.Add(new Day2());
-            puzzles.Add(new Day3());
-            puzzles.Add(new Day4());
-            puzzles.Add(new Day5());
-            puzzles.Add(new Day6());
-            puzzles.Add(new Day7());
-            puzzles.Add(new Day8());
-            puzzles.Add(new Day9());
+            puzzles.Add(new Day01());
+            puzzles.Add(new Day02());
+            puzzles.Add(new Day03());
+            puzzles.Add(new Day04());
+            puzzles.Add(new Day05());
+            puzzles.Add(new Day06());
+            puzzles.Add(new Day07());
+            puzzles.Add(new Day08());
+            puzzles.Add(new Day09());
             puzzles.Add(new Day10());
+
         }
 
         static void RunPuzzles(List<BasePuzzleLogic> puzzles)

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AoC_2023.Logic
 {
-    public class Day4 : BasePuzzleLogic
+    public class Day04 : BasePuzzleLogic
     {
-        public Day4() : base(4)
+        public Day04() : base(4)
         {
 
         }

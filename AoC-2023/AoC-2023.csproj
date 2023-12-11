@@ -6,42 +6,42 @@
     <RootNamespace>AoC_2023</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Day1\" />
+    <Folder Include="Data\Day01\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\Day1\data.txt">
+    <None Update="Data\Day01\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Day2\data.txt">
+    <None Update="Data\Day02\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Day3\data.txt">
+    <None Update="Data\Day03\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Day4\data.txt">
+    <None Update="Data\Day04\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Day10\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Day9\data.txt">
+    <None Update="Data\Day09\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Day8\data.txt">
+    <None Update="Data\Day08\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Day7\data.txt">
+    <None Update="Data\Day07\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Day6\data.txt">
+    <None Update="Data\Day06\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Day5\data.txt">
+    <None Update="Data\Day05\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

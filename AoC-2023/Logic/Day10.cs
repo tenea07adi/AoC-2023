@@ -11,7 +11,7 @@ namespace AoC_2023.Logic
     {
         public Day10() : base(10)
         {
-            
+
         }
 
         protected override string LogicPart1(string data)
@@ -23,17 +23,17 @@ namespace AoC_2023.Logic
 
             int minCost = -1;
 
-            for(int i = 0; i< 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 int currentCost = FindLoopLenght(pipesMap, animalPoz, i, false);
 
-                if((minCost == -1 || minCost > currentCost) && currentCost != -1)
+                if ((minCost == -1 || minCost > currentCost) && currentCost != -1)
                 {
                     minCost = currentCost;
                 }
             }
-                
-            if(minCost % 2 == 0)
+
+            if (minCost % 2 == 0)
             {
                 res = minCost / 2;
             }
@@ -45,7 +45,7 @@ namespace AoC_2023.Logic
             return res.ToString();
         }
 
-        protected unsafe override string LogicPart2(string data)
+        protected override string LogicPart2(string data)
         {
             string[,] pipesMap = GetPipesMap(data);
             int[] animalPoz = FindAnimalPoz(pipesMap);
@@ -66,19 +66,47 @@ namespace AoC_2023.Logic
                 }
             }
 
-            int b = 20;
-            int* ptr1 = &b;
+            string[,] pipesMapOrig = MatrixHelper.CopyMatrix(pipesMap);
 
-            var matrixMapPointer = &pipesMap;
+            var matrixMapPointer = pipesMap;
 
-            FindLoopLenght(*matrixMapPointer, animalPoz, minLoop, true);
+            FindLoopLenght(matrixMapPointer, animalPoz, minLoop, true);
+
+            res = InteriorSpaces(matrixMapPointer, pipesMapOrig);
 
             return res.ToString();
         }
 
-        private int InteriorSpaces(string[,] pipesMap)
+        private int InteriorSpaces(string[,] pipesMap, string[,] pipesMapOrig)
         {
-            return 0;
+            int count = 0;
+            for (int i = 0; i < pipesMap.GetLength(0); i++)
+            {
+                bool inside = false;
+                for (int j = 0; j < pipesMap.GetLength(1); j++)
+                {
+                    if (pipesMap[i, j] == "*")
+                    {
+                        if (pipesMapOrig[i, j] == "-")
+                        {
+                            inside = true;
+                        }
+                        else
+                        {
+                            inside = !inside;
+                        }
+                    }
+                    else
+                    {
+                        if (inside)
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+
+            return count;
         }
 
         // find if around the startPoz exist a loop
@@ -93,38 +121,11 @@ namespace AoC_2023.Logic
 
             int costCount = 0;
 
-            int[] curentPoz = new int[2];
+            int[] curentPoz = GetNextPozForAnimalPoz(pipesMap, startPoz, startDir);
 
-            switch (startDir)
+            if (curentPoz == null)
             {
-                case 0:
-                    curentPoz = new int[2] { startPoz[0], startPoz[1] - 1 };
-                    if (pipesMap[curentPoz[0], curentPoz[1]] == "7" || pipesMap[curentPoz[0], curentPoz[1]] == "|")
-                    {
-                        return -1;
-                    }
-                    break;
-                case 1:
-                    curentPoz = new int[2] { startPoz[0] + 1, startPoz[1] };
-                    if (pipesMap[curentPoz[0], curentPoz[1]] == "7" || pipesMap[curentPoz[0], curentPoz[1]] == "-")
-                    {
-                        return -1;
-                    }
-                    break;
-                case 2:
-                    curentPoz = new int[2] { startPoz[0], startPoz[1] + 1 };
-                    if (pipesMap[curentPoz[0], curentPoz[1]] == "F" || pipesMap[curentPoz[0], curentPoz[1]] == "|")
-                    {
-                        return -1;
-                    }
-                    break;
-                case 3:
-                    curentPoz = new int[2] { startPoz[0] - 1, startPoz[1] };
-                    if (pipesMap[curentPoz[0], curentPoz[1]] == "J" || pipesMap[curentPoz[0], curentPoz[1]] == "-")
-                    {
-                        return -1;
-                    }
-                    break;
+                return -1;
             }
 
             while (run)
@@ -132,9 +133,9 @@ namespace AoC_2023.Logic
 
                 int[] nextPoz = GetNextPoz(pipesMap, curentPoz, startPoz);
 
-                if(nextPoz == null)
+                if (nextPoz == null)
                 {
-                    costCount =  - 1;
+                    costCount = -1;
                     break;
                 }
 
@@ -145,18 +146,24 @@ namespace AoC_2023.Logic
 
                 if (replacePath)
                 {
-                    pipesMap[nextPoz[0], nextPoz[1]] = "*";
+                    pipesMap[startPoz[0], startPoz[1]] = "*";
                 }
 
                 startPoz = curentPoz;
+
                 curentPoz = nextPoz;
 
                 costCount++;
 
-                if(costCount >= maxCost)
+                if (costCount >= maxCost)
                 {
                     run = false;
                 }
+            }
+
+            if (replacePath)
+            {
+                pipesMap[startPoz[0], startPoz[1]] = "*";
             }
 
             return costCount;
@@ -164,7 +171,7 @@ namespace AoC_2023.Logic
 
         private int[] GetNextPoz(string[,] pipesMap, int[] currentPoz, int[] lastPoz)
         {
-            if (currentPoz[0] < 0 || currentPoz[0] > pipesMap.GetLength(0) || currentPoz[1] < 0 || currentPoz[1] > pipesMap.GetLength(1))
+            if (IsOutsideOfTheBounds(pipesMap, currentPoz[0], currentPoz[1]) || currentPoz[0] < 0 || currentPoz[0] > pipesMap.GetLength(0) || currentPoz[1] < 0 || currentPoz[1] > pipesMap.GetLength(1))
             {
                 return null;
             }
@@ -181,7 +188,7 @@ namespace AoC_2023.Logic
                     nextPoz[1] = currentPoz[1] + (currentPoz[1] - lastPoz[1]);
                     break;
                 case "L":
-                    if(currentPoz[0] == lastPoz[0]) // from right to top
+                    if (currentPoz[0] == lastPoz[0]) // from right to top
                     {
                         nextPoz[0] = currentPoz[0] - 1;
                         nextPoz[1] = currentPoz[1];
@@ -236,15 +243,65 @@ namespace AoC_2023.Logic
             return nextPoz;
         }
 
+        private int[] GetNextPozForAnimalPoz(string[,] pipesMap, int[] startPoz, int startDir)
+        {
+            int[] curentPoz = new int[2];
+
+            switch (startDir)
+            {
+                case 0:
+                    curentPoz = new int[2] { startPoz[0], startPoz[1] - 1 };
+                    if (IsOutsideOfTheBounds(pipesMap, curentPoz[0], curentPoz[1]) || pipesMap[curentPoz[0], curentPoz[1]] == "7" || pipesMap[curentPoz[0], curentPoz[1]] == "|")
+                    {
+                        return null;
+                    }
+                    break;
+                case 1:
+                    curentPoz = new int[2] { startPoz[0] + 1, startPoz[1] };
+                    if (IsOutsideOfTheBounds(pipesMap, curentPoz[0], curentPoz[1]) || pipesMap[curentPoz[0], curentPoz[1]] == "7" || pipesMap[curentPoz[0], curentPoz[1]] == "-")
+                    {
+                        return null;
+                    }
+                    break;
+                case 2:
+                    curentPoz = new int[2] { startPoz[0], startPoz[1] + 1 };
+                    if (IsOutsideOfTheBounds(pipesMap, curentPoz[0], curentPoz[1]) || pipesMap[curentPoz[0], curentPoz[1]] == "F" || pipesMap[curentPoz[0], curentPoz[1]] == "|")
+                    {
+                        return null;
+                    }
+                    break;
+                case 3:
+                    curentPoz = new int[2] { startPoz[0] - 1, startPoz[1] };
+                    if (IsOutsideOfTheBounds(pipesMap, curentPoz[0], curentPoz[1]) || pipesMap[curentPoz[0], curentPoz[1]] == "J" || pipesMap[curentPoz[0], curentPoz[1]] == "-")
+                    {
+                        return null;
+                    }
+                    break;
+                default:
+                    return null;
+            }
+            return curentPoz;
+        }
+
+        private bool IsOutsideOfTheBounds(string[,] pipesMap, int row, int col)
+        {
+            if (pipesMap.GetLength(0) <= row || row < 0 || pipesMap.GetLength(1) <= col || col < 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private int[] FindAnimalPoz(string[,] pipesMap)
         {
-            int[] animalPoz= new int[2];
+            int[] animalPoz = new int[2];
 
-            for(int i = 0; i < pipesMap.GetLength(0); i++)
+            for (int i = 0; i < pipesMap.GetLength(0); i++)
             {
                 for (int j = 0; j < pipesMap.GetLength(1); j++)
                 {
-                    if (pipesMap[i,j] == "S")
+                    if (pipesMap[i, j] == "S")
                     {
                         animalPoz[0] = i;
                         animalPoz[1] = j;

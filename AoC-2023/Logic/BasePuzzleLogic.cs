@@ -20,7 +20,10 @@ namespace AoC_2023.Logic
 
         public void Run()
         {
-            string data = DataProviderHelper.GetText($"\\Day{CalendarDay}\\data.txt");
+            string calendarDayAsString = CalendarDay.ToString();
+            calendarDayAsString = calendarDayAsString.Length == 1 ? "0" + calendarDayAsString : calendarDayAsString;
+
+            string data = DataProviderHelper.GetText($"\\Day{calendarDayAsString}\\data.txt");
 
             string resultP1 = this.LogicPart1(data);
             string resultP2 = this.LogicPart2(data);
