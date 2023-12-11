@@ -30,6 +30,7 @@ namespace AoC_2023
             puzzles.Add(new Day08());
             puzzles.Add(new Day09());
             puzzles.Add(new Day10());
+            puzzles.Add(new Day11());
 
         }
 
