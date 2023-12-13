@@ -31,7 +31,7 @@ namespace AoC_2023
             puzzles.Add(new Day09());
             puzzles.Add(new Day10());
             puzzles.Add(new Day11());
-
+            puzzles.Add(new Day13());
         }
 
         static void RunPuzzles(List<BasePuzzleLogic> puzzles)
